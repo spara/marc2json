@@ -355,6 +355,99 @@ def marc_575
 	return dict 
 end
 
+def marc_653
+	# http://www.loc.gov/marc/community/ci653.html
+	dict = Hash.new
+	dict.store("a","uncontrolled_term")
+	dict.store("6","linkage")
+	dict.store("8","field_link_sequence_no")
+
+	return dict
+end
+
+def marc_700
+	# http://www.loc.gov/marc/community/ci700.html
+	dict = Hash.new
+	dict.store("a","personal_name")
+	dict.store("b","numeration")
+	dict.store("c","titles")
+	dict.store("d","dates_associated_with_name")
+	dict.store("e","relator_term")
+	dict.store("f","date_of+_work")
+	dict.store("g","miscellaneous_information")
+	dict.store("j","attribution_qualitfier")
+	dict.store("n","number_of_part")
+	dict.store("p","name_of_part")
+	dict.store("q","fuller_form_of_name")
+	dict.store("s","version")
+	dict.store("t","title")
+	dict.store("u","affiliation")
+	dict.store("0","authority_record_control_no")
+	dict.store("4","relator_code")
+	dict.store("6","linkage")
+	dict.store("8","field_link_sequence_no")
+
+	return dict 
+	
+end
+
+def marc_710
+	# http://www.loc.gov/marc/community/ci710.html
+	dict = Hash.new
+	dict.store("a","corporate_or_juristiction_name")
+	dict.store("b","subordinate_unit")
+	dict.store("c","location_of_meeting")
+	dict.store("d","date_of_meeting")
+	dict.store("e","relator_term")
+	dict.store("f","date_of_work")
+	dict.store("g","miscellaneous_information")
+	dict.store("n","number_of_part")
+	dict.store("p","name_of_part")
+	dict.store("s","version")
+	dict.store("t","title")
+	dict.store("u","affiliation")
+	dict.store("0","authority_record_control_no")
+	dict.store("4","relator_code")
+	dict.store("6","linkage")
+	dict.store("8","field_link_sequence_no")
+
+	return dict 
+end
+
+def marc_856
+	# http://www.loc.gov/marc/community/ci856.html
+	dict = Hash.new
+	dict.store("a","host_name")
+	dict.store("b","access_no")
+	dict.store("c","compression_information")
+	dict.store("d","path")
+	dict.store("f","electronic_name")
+	dict.store("h","processor_of_request")
+	dict.store("i","instruction")
+	dict.store("j","bits_per_second")
+	dict.store("k","password")
+	dict.store("l","logon")
+	dict.store("m","contact_for_access_assistance")
+	dict.store("n","name_of_location_of_host")
+	dict.store("o","operating_system")
+	dict.store("p","port")
+	dict.store("q","electronic_format_type")
+	dict.store("r","settings")
+	dict.store("s","file_size")
+	dict.store("t","terminal_emulation")
+	dict.store("u","uniform_resource_identifier")
+	dict.store("v","hours_access_method_available")
+	dict.store("w","record_control_no")
+	dict.store("x","nonpublic_note")
+	dict.store("y","link_text")
+	dict.store("z","public_note")
+	dict.store("2","access_method")
+	dict.store("3","materials_specified")
+	dict.store("6","linkage")
+	dict.store("8","field_link_sequence_no")
+	
+end
+
 def check_row(element)
 	if element.count('|') > 1
 		row = element[7..element.length].chomp.split("|")
