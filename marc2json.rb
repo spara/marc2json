@@ -9,10 +9,10 @@ def marc_dict
 	dict.store("008","fixed_length")
 	dict.store("020","isbn")
 	dict.store("041","language_code")
-	dict.store("043"."geographic_area_code")
+	dict.store("043","geographic_area_code")
 	dict.store("073","organization_code")
 	dict.store("074","gpo_item_no")
-	dict.store("084"."other_classification_no")
+	dict.store("084","other_classification_no")
 	dict.store("089","unknown")
 	dict.store("110","primary_name")
 	dict.store("270","address")
@@ -23,15 +23,17 @@ def marc_dict
 	dict.store("275","address_associated_with_title")
 	dict.store("276","unknown")
 	dict.store("277","unknown")
+	dict.store("284","unknown")
 	dict.store("287","unknown")
 	dict.store("307","hours")
-	dict.store("308"."film_description")
+	dict.store("308","film_description")
 	dict.store("505","program_note")
+	dict.store("520","description_note")
 	dict.store("521","target_group_note")
 	dict.store("522","geographic_coverage_note")
 	dict.store("528","unknown")
 	dict.store("531","eligibility_fees_procedures")
-	dict.store("523","unkown")
+	dict.store("532","unknown")
 	dict.store("533","reproduction_note")
 	dict.store("534","original_version_note")
 	dict.store("536","funding_source_note")
@@ -39,7 +41,7 @@ def marc_dict
 	dict.store("563","binding_information")
 	dict.store("570","personnel_note")
 	dict.store("574","transportation_directions_note")
-	dict.stoe("575","accomodations_for_disabld_note")
+	dict.store("575","accomodations_for_disabld_note")
 	dict.store("653","index_term_uncontrolled")
 	dict.store("690","local_subject_access_field")
 	dict.store("691","local_subject_access_field")
@@ -180,7 +182,19 @@ def marc_271
 	dict.store("n","tdd_number")
 	dict.store("p","contact_person")
 	dict.store("q","title_of_contact_person")
+	dict.store("r","hours")
 	dict.store("6","linkage")
+	dict.store("8","field_link_sequence_no")
+
+	return dict 
+end
+
+def marc_273
+	# made up this shit based on data
+	dict = Hash.new
+	dict.store("a","phone")
+	dict.store("b","name_of_location_of_host")
+	dict.store("z","days_hours_of_oper")
 
 	return dict 
 end
@@ -448,14 +462,30 @@ def marc_856
 	
 end
 
-def check_row(element)
+def field(marc_id)
+	dict = Hash.new
+	dict = dict.send("marc_dict")
+	field = dict.fetch(marc_id)
+
+	return field
+end
+
+def subfield(id,marc_id, element)
+	subfield_hash = Hash.new
+	dict = Hash.new
+	dict = dict.send("marc_#{marc_id}")
+	subfield_array = Array.new
 	if element.count('|') > 1
 		row = element[7..element.length].chomp.split("|")
+        row.each do |subfield|
+			subfield_array.push(dict.fetch(subfield[0..0]).to_s => subfield[1..subfield.length])
+		end
 	else
-		row = element[6..element.length].delete("|").chomp
+		subfield_array.push(dict.fetch(element[7..7]).to_s => element[8..element.length].delete("|").chomp)
 	end
-	return row
+	return subfield_array
 end
+
 
 def record_to_json(record)
 	rec = Array.new
@@ -463,19 +493,19 @@ def record_to_json(record)
 		item = case row[0..2]
 		 	when "EOR" then rec.push("end" => row.chomp)
 			when "LDR" then rec.push("begin" => row.chomp)
-			when "001" then rec.push({row[0..2] => row[4..row.length].chomp})
-			when "008" then rec.push({row[0..2] => row[4..row.length].rstrip.chomp})
-			#when "043" then rec.push({row[0..2] => row[4..row.length].chomp.split("|")})
-			when "043" then rec.push({row[0..2] => check_row(row)})
-			when "110" then rec.push({row[0..2] => row[4..row.length].chomp.split("|")})
-			when "270" then rec.push({row[0..2] => row[7..row.length].chomp.split("|")})
-			when "271" then rec.push({row[0..2] => row[7..row.length].chomp.split("|")})	
-			when "273" then rec.push({row[0..2] => row[7..row.length].chomp.split("|")})
-			when "653" then rec.push({row[0..2] => row[7..row.length].chomp.split("|")})
-			when "700" then rec.push({row[0..2] => row[7..row.length].chomp.split("|")})	
-			when "907" then rec.push({row[0..2] => row[7..row.length].chomp.split("|")})	
-			when "998" then rec.push({row[0..2] => row[7..row.length].chomp.split("|")})
-			else rec.push({row[0..2] => row[6..row.length].delete("|").chomp})
+			when "001" then rec.push({field(row[0..2]) => row[4..row.length].chomp})
+			when "008" then rec.push({field(row[0..2]) => row[4..row.length].rstrip.chomp})
+			when "043" then rec.push({field(row[0..2]) => subfield(rec[1],"043",row)})
+			when "110" then rec.push({field(row[0..2]) => row[4..row.length].chomp.split("|")})
+			when "270" then rec.push({field(row[0..2]) => subfield(rec[1],"270",row)})
+			when "271" then rec.push({field(row[0..2]) => subfield(rec[1],"271",row)})	
+			when "273" then rec.push({field(row[0..2]) => subfield(rec[1],"273",row)})
+			when "522" then rec.push({field(row[0..2]) => subfield(rec[1],"522",row)})
+			when "653" then rec.push({field(row[0..2]) => subfield(rec[1],"653",row)})
+			when "700" then rec.push({field(row[0..2]) => subfield(rec[1],"700",row)})
+			when "907" then rec.push({field(row[0..2]) => row[7..row.length].chomp.split("|")})
+			when "998" then rec.push({field(row[0..2]) => row[7..row.length].chomp.split("|")})
+			else rec.push({field(row[0..2]) => row[7..row.length].delete("|").chomp})
 		end
 	end
 	return rec
@@ -483,7 +513,7 @@ end
 
 record = StringIO.new
 
-File.open('../data/SanMateoCIP.txt', 'r') do |file|
+File.open('../data/SanMateoCIP2.txt', 'r') do |file|
 	while (line = file.gets)
 		line.encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
 		line.encode!('UTF-8', 'UTF-16')
