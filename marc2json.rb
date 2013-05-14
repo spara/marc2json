@@ -18,36 +18,54 @@ def marc_dict
 	dict.store("270","address")
 	dict.store("271","additional_address")
 	dict.store("272","unknown")
-	dict.store("273","unknown")
-	dict.store("274","unknown")
-	dict.store("275","address_associated_with_title")
-	dict.store("276","unknown")
+	#dict.store("273","unknown")
+	dict.store("273","phone_or_hours_of_operation")
+	#dict.store("274","unknown")
+	dict.store("274","fax")
+	#dict.store("275","address_associated_with_title")
+	dict.store("275","tty")
+	#dict.store("276","unknown")
+	dict.store("276","email")
 	dict.store("277","unknown")
 	dict.store("284","unknown")
 	dict.store("287","unknown")
-	dict.store("307","hours")
+	#dict.store("307","hours")
+	dict.store("307","service_hours")
 	dict.store("308","film_description")
 	dict.store("505","program_note")
-	dict.store("520","description_note")
-	dict.store("521","target_group_note")
+	#dict.store("520","description_note")
+	dict.store("520","description")
+	#dict.store("521","target_group_note")
+	dict.store("521","target_group")
 	dict.store("522","geographic_coverage_note")
-	dict.store("528","unknown")
-	dict.store("531","eligibility_fees_procedures")
-	dict.store("532","unknown")
-	dict.store("533","reproduction_note")
-	dict.store("534","original_version_note")
+	#dict.store("528","unknown")
+	dict.store("528","services_provided")
+	#dict.store("531","eligibility_fees_procedures")
+	dict.store("531","eligibility_requirements")
+	#dict.store("532","unknown")
+	dict.store("532","fees")
+	#dict.store("533","reproduction_note")
+	dict.store("533","how_to_apply")
+	#dict.store("534","original_version_note")
+	dict.store("534","service_wait")
 	dict.store("536","funding_source_note")
-	dict.store("546","language_note")
+	#dict.store("546","language_note")
+	dict.store("546","languages_spoken")
 	dict.store("563","binding_information")
 	dict.store("570","personnel_note")
-	dict.store("574","transportation_directions_note")
-	dict.store("575","accomodations_for_disabld_note")
-	dict.store("653","index_term_uncontrolled")
+	#dict.store("574","transportation_directions_note")
+	dict.store("574","transportation_availability")
+	#dict.store("575","accomodations_for_disabled_note")
+	dict.store("575","accessibility")
+	#dict.store("653","index_term_uncontrolled")
+	dict.store("653","organization_type")
 	dict.store("690","local_subject_access_field")
-	dict.store("691","local_subject_access_field")
+	#dict.store("691","local_subject_access_field")
+	dict.store("691","keywords")
 	dict.store("700","added_entry-personal")
 	dict.store("710","added_entry-corporate")
-	dict.store("856","electronic_location_access")
+	#dict.store("856","electronic_location_access")
+	dict.store("856","url")
 	dict.store("907","local_call_numbers")
 	dict.store("913","local_call_numbers")
 	dict.store("914","local_call_numbers")
@@ -135,6 +153,15 @@ def marc_084
 	return dict 
 end
 
+def marc_110
+	# made this shit up based on data
+	dict = Hash.new
+	dict.store("a","name")
+	dict.store("b","organization")
+
+	return dict 
+end
+
 def marc_270
 	# http://www.loc.gov/marc/community/ci270.html
 	dict = Hash.new
@@ -142,7 +169,8 @@ def marc_270
 	dict.store("b","city")
 	dict.store("c","state")
 	dict.store("d","country")
-	dict.store("e","postal_code")
+	#dict.store("e","postal_code")
+	dict.store("e","zipcode")
 	dict.store("f","title_before_attention_name")
 	dict.store("g","attention_name")
 	dict.store("h","title_following_attention_name")
@@ -194,11 +222,12 @@ def marc_273
 	dict = Hash.new
 	dict.store("a","phone")
 	dict.store("b","name_of_location_of_host")
-	dict.store("z","days_hours_of_oper")
+	dict.store("z","days_hours_of_operation")
 
 	return dict 
 end
-	
+
+
 def marc_275
 	# http://www.loc.gov/marc/community/ci2xx.html
 		dict = Hash.new
@@ -218,6 +247,7 @@ def marc_275
 	dict.store("n","tdd_number")
 	dict.store("p","contact_person")
 	dict.store("q","title_of_contact_person")
+	dict.store("z","tty")
 	dict.store("6","linkage")
 
 	return dict 
@@ -284,7 +314,8 @@ end
 def marc_533
 	#http://www.loc.gov/marc/bibliographic/bd533.html
 	dict = Hash.new
-	dict.store("a","main_entry_of_original")
+	#dict.store("a","main_entry_of_original")
+	dict.store("a","application")
 	dict.store("b","edition_statement_of_original")
 	dict.store("c","publication")
 	dict.store("e","physical_description")
@@ -362,7 +393,8 @@ end
 def marc_575
 	# http://www.loc.gov/marc/community/ci575.html
 	dict = Hash.new
-	dict.store("a","accomodations_for_disabled_note")
+	#dict.store("a","accomodations_for_disabled_note")
+	dict.store("a","accomodations_for_disabled")
 	dict.store("6","linkage")
 	dict.store("8","field_link_sequence_no")
 
@@ -372,7 +404,8 @@ end
 def marc_653
 	# http://www.loc.gov/marc/community/ci653.html
 	dict = Hash.new
-	dict.store("a","uncontrolled_term")
+	#dict.store("a","uncontrolled_term")
+	dict.store("a","keyword")
 	dict.store("6","linkage")
 	dict.store("8","field_link_sequence_no")
 
@@ -402,7 +435,6 @@ def marc_700
 	dict.store("8","field_link_sequence_no")
 
 	return dict 
-	
 end
 
 def marc_710
@@ -460,6 +492,7 @@ def marc_856
 	dict.store("6","linkage")
 	dict.store("8","field_link_sequence_no")
 	
+	return dict
 end
 
 def field(marc_id)
@@ -483,9 +516,34 @@ def subfield(id,marc_id, element)
 	else
 		subfield_array.push(dict.fetch(element[7..7]).to_s => element[8..element.length].delete("|").chomp)
 	end
+
 	return subfield_array
 end
 
+def record_to_json_marc(record)
+	rec = Array.new
+	record.each_line do |row|
+		item = case row[0..2]
+		 	when "EOR" then rec.push("end" => row.chomp)
+			when "LDR" then rec.push("begin" => row.chomp)
+			when "001" then rec.push({row[0..2] => row[4..row.length].chomp})
+			when "008" then rec.push({row[0..2] => row[4..row.length].rstrip.chomp})
+			when "043" then rec.push({row[0..2] => subfield(rec[1],"043",row)})
+			#when "110" then rec.push({field(row[0..2]) => row[7..row.length].chomp.split("|")})
+			when "110" then rec.push({row[0..2] => subfield(rec[1],"110",row)})
+			when "270" then rec.push({row[0..2] => subfield(rec[1],"270",row)})
+			when "271" then rec.push({row[0..2] => subfield(rec[1],"271",row)})	
+			when "273" then rec.push({row[0..2] => subfield(rec[1],"273",row)})
+			when "522" then rec.push({row[0..2] => subfield(rec[1],"522",row)})
+			when "653" then rec.push({row[0..2] => subfield(rec[1],"653",row)})
+			when "700" then rec.push({row[0..2] => subfield(rec[1],"700",row)})
+			when "907" then rec.push({row[0..2] => row[7..row.length].chomp.split("|")})
+			when "998" then rec.push({row[0..2] => row[7..row.length].chomp.split("|")})
+			else rec.push({row[0..2] => row[8..row.length].delete("|").chomp})
+		end
+	end
+	return rec
+end
 
 def record_to_json(record)
 	rec = Array.new
@@ -496,7 +554,8 @@ def record_to_json(record)
 			when "001" then rec.push({field(row[0..2]) => row[4..row.length].chomp})
 			when "008" then rec.push({field(row[0..2]) => row[4..row.length].rstrip.chomp})
 			when "043" then rec.push({field(row[0..2]) => subfield(rec[1],"043",row)})
-			when "110" then rec.push({field(row[0..2]) => row[4..row.length].chomp.split("|")})
+			#when "110" then rec.push({field(row[0..2]) => row[7..row.length].chomp.split("|")})
+			when "110" then rec.push({field(row[0..2]) => subfield(rec[1],"110",row)})
 			when "270" then rec.push({field(row[0..2]) => subfield(rec[1],"270",row)})
 			when "271" then rec.push({field(row[0..2]) => subfield(rec[1],"271",row)})	
 			when "273" then rec.push({field(row[0..2]) => subfield(rec[1],"273",row)})
@@ -505,26 +564,184 @@ def record_to_json(record)
 			when "700" then rec.push({field(row[0..2]) => subfield(rec[1],"700",row)})
 			when "907" then rec.push({field(row[0..2]) => row[7..row.length].chomp.split("|")})
 			when "998" then rec.push({field(row[0..2]) => row[7..row.length].chomp.split("|")})
-			else rec.push({field(row[0..2]) => row[7..row.length].delete("|").chomp})
+			else rec.push({field(row[0..2]) => row[8..row.length].delete("|").chomp})
 		end
 	end
 	return rec
 end
 
+def record_to_json_mvp(record)
+	rec = Array.new
+	record.each_line do |row|
+		item = case row[0..2]
+			#when "001" then rec.push({"id" => row[4..row.length].chomp})
+			when "110" then rec.push(field(row[0..2]) => subfield(rec[1],"110",row))
+			when "270" then rec.push(field(row[0..2]) => subfield(rec[1],"270",row))
+			when "273" then rec.push(field(row[0..2]) => subfield(rec[1],"273",row))
+			when "274" then rec.push(field(row[0..2]) => row[8..row.length].delete("|").chomp)
+			when "275" then rec.push(field(row[0..2]) => subfield(rec[1],"275",row))
+			when "276" then rec.push(field(row[0..2]) => row[8..row.length].delete("|").chomp)
+			when "307" then rec.push(field(row[0..2]) => subfield(rec[1],"307",row))
+			when "520" then rec.push(field(row[0..2]) => row[8..row.length].delete("|").chomp)
+			when "521" then rec.push(field(row[0..2]) => row[8..row.length].delete("|").chomp)
+			when "528" then rec.push(field(row[0..2]) => row[8..row.length].delete("|").chomp)
+			when "531" then rec.push(field(row[0..2]) => subfield(rec[1],"531",row))
+			when "532" then rec.push(field(row[0..2]) => row[8..row.length].delete("|").chomp)
+			when "533" then rec.push(field(row[0..2]) => subfield(rec[1],"533",row))
+			when "534" then rec.push(field(row[0..2]) => row[8..row.length].delete("|").chomp)
+			when "546" then rec.push(field(row[0..2]) => subfield(rec[1],"546",row))
+			when "574" then rec.push(field(row[0..2]) => row[8..row.length].delete("|").chomp)
+			when "575" then rec.push(field(row[0..2]) => subfield(rec[1],"575",row))
+			when "653" then rec.push(field(row[0..2]) => subfield(rec[1],"653",row))
+			when "691" then rec.push(field(row[0..2]) => row[8..row.length].delete("|").chomp)
+			when "856" then rec.push(field(row[0..2]) => row[8..row.length].delete("|").chomp)
+		end
+	end
+	return rec
+end
+
+
+def normalize_mvp(mvp_record)
+	normal = Array.new
+	ph = Array.new
+	keywords_array = Array.new
+	mvp_record.each do |element|
+		if element.has_key?("primary_name")
+			ary = element.values[0]
+			ary.each do |hsh|
+				normal.push(hsh)
+			end
+		elsif element.has_key?("service_hours")
+			if element.values[0].size == 1
+				normal.push({"service_hours" => element.values[0]})
+			end
+		elsif element.has_key?("address")
+			ary = element.values[0]
+			ary.each do |hsh|
+				normal.push(hsh)
+			end
+		elsif element.has_key?("phone_or_hours_of_operation")
+			phone_array = Array.new
+			ary = element.values[0]			
+			ary.each do |hsh|
+				hsh.each do |key, value|
+					#puts value
+					case value
+					when /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+						phone_array.push("number" => value)
+					when /day/
+						phone_array.push("phone_hours" => value)
+					when /hours/
+						phone_array.push("phone_hours" => value)
+					when /daily/
+						phone_array.push("phone_hours" => value)
+					when /nights/
+						phone_array.push("phone_hours" => value)
+					when /weekend/
+						phone_array.push("phone_hours" => value)
+					when /holidays/
+						phone_array.push("phone_hours" => value)
+					else
+						phone_array.push("department" => value)
+					end
+				end
+			end
+			ph.push(phone_array)
+		elsif element.has_key?("tty")
+			if element.values.length == 1
+				normal.push("phones" => {"number" => element.values[0][0]["address"]})
+			end
+		elsif element.has_key?("eligibility_requirements")
+			if element.values.length == 1
+				normal.push("eligibility_requirements" => element.values[0][0]["eligibility"])
+			end
+		elsif element.has_key?("how_to_apply")
+			if element.values.length == 1
+				normal.push("how_to_apply" => element.values[0][0]["application"])
+			end
+		elsif element.has_key?("languages_spoken")
+			normal.push("languages_spoken" =>element["languages_spoken"].map(&:values).flatten)
+		elsif element.has_key?("accessibility")
+			normal.push("accessibility" =>element["accessibility"].map(&:values).flatten)
+		elsif element.has_key?("keywords")
+			if element["keywords"].size < 2
+				keywords_array.push(element["keywords"].map(&:values).flatten)
+			else
+				keywords_array.push(element["keywords"])
+			end
+		elsif element.has_key?("organization_type")			
+			keywords_array.push(element["organization_type"].map(&:values).flatten)
+			#normal.push("keywords" => keywords_array.flatten.uniq)
+			#normal.push("keywords" => kw.uniq)			
+		else
+			normal.push(element)
+		end
+	end
+	
+	# add keywords
+	if keywords_array.size > 0
+		normal.push("keywords" => keywords_array.flatten.uniq)
+	end
+
+	# group by keys
+	grouped = normal.group_by(&:keys).map{|k, v| {k.first => v.flat_map(&:values).flatten}}
+	nrml = Array.new
+	
+	# remove arrays if only one value
+	grouped.each do |hsh|
+		hsh.each do |k, v|
+			if v.size < 2
+				nrml.push(k => v[0])
+			else
+				nrml.push(k => v)
+			end
+		end
+	end
+	
+	# add phones
+	if ph.size == 1
+		nrml << {"phones" => ph.flatten(1)}
+	else
+		nrml << {"phones" => ph}
+	end
+
+	return nrml
+end
+
+def usage()
+	puts "Usage:"
+	puts "marc2json [format: cip, mvp] [file]"
+
+	return
+end
+
+arguments = ARGV.size
 record = StringIO.new
 
-File.open('../data/SanMateoCIP2.txt', 'r') do |file|
-	while (line = file.gets)
-		line.encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
-		line.encode!('UTF-8', 'UTF-16')
-
-		record <<  line
-		if line.chomp == "EOR"
-			puts record_to_json(record.string).to_json
-			record.truncate(0)
-			record.rewind			
-			#break
+if ARGV.size < 2
+	usage()
+else
+	file = ARGV[1]
+	format = ARGV[0]
+	File.open(file, 'r') do |file|
+		while (line = file.gets)
+			line.encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
+			line.encode!('UTF-8', 'UTF-16')
+			record <<  line
+			if line.chomp == "EOR"
+				case format
+				when "cip"
+					puts record_to_json(record.string).to_json
+				when "mvp"
+					rec = record_to_json_mvp(record.string)
+					puts normalize_mvp(rec).to_json
+				else
+					puts "unrecognized format"
+					break
+				end
+				record.truncate(0)
+				record.rewind			
+			end
 		end
-		
-	end
-end 
+	end 
+end
